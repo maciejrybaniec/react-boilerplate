@@ -17,10 +17,7 @@ module.exports = {
         loaders: [{
             test: /\.jsx?$/,
             exclude: /node_modules/,
-            ,loaders:  ['react-hot', 'babel-loader?presets[]=react,presets[]=es2015,presets[]=stage-1']
-            query: {
-                plugins: ['transform-decorators-legacy']
-            }
+            loaders:  ['react-hot', 'babel-loader?presets[]=react,presets[]=es2015,presets[]=stage-1,plugins[]=transform-decorators-legacy'],
         }]
     },
     node: {

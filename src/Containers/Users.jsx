@@ -1,21 +1,16 @@
 import autobind from 'autobind-decorator';
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 import { addUser } from 'Actions';
 
-const mapStateToProps = (state) => {
-    return {
-        users: state.users.availableUsers
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addUser: bindActionCreators(addUser, dispatch)
-    };
-};
+const mapQueriesToProps = gql`
+  query getUsers {
+    users { id, name }
+  }
+`;
 
 const UserItem = (props) => {
     return (
@@ -25,21 +20,28 @@ const UserItem = (props) => {
     );
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
+@graphql(mapQueriesToProps)
 class UsersContainer extends Component {
     render() {
-        const { users } = this.props;
         return (
             <div className="UsersContainer">
-                {users.map((user) => {
-                    return (
-                        <UserItem key={user}>{user}</UserItem>
-                    );
-                })}
-                <input type="text" ref={(c) => this._input = c} />
-                <button type="button" onClick={this._onClick}>
-                    Add user
-                </button>
+                { (this.props.data.loading ? (
+                    <div>Loading</div>
+                ):
+                    <ul className="UsersContainer__list">
+                        {this.props.data.users.map((user) => {
+                            return (
+                                <UserItem key={user.id}>{user.name}</UserItem>
+                            );
+                        })}
+                    </ul>
+                )}
+                <div className="UsersContainer__form">
+                    <input type="text" ref={(c) => this._input = c} />
+                    <button type="button" onClick={this._onClick}>
+                        Add user
+                    </button>
+                </div>
             </div>
         );
     }

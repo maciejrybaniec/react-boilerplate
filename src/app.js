@@ -6,21 +6,20 @@
 
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux'
+import { ApolloProvider } from 'react-apollo'
 
+import configureStore, { client } from './configureStore';
 import App from 'Containers/App';
-import reducer from 'Reducers';
 
 if (module.hot) {
   module.hot.accept();
 }
 
-const store = createStore(reducer);
+const store = configureStore();
 
 render(
-  <Provider store={store}>
+  <ApolloProvider client={client} store={store} immutable={true}>
     <App />
-  </Provider>,
+  </ApolloProvider>,
   document.getElementById('root')
 );

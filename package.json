@@ -12,7 +12,10 @@
   "author": "maciej.rybaniec@gmail.com",
   "license": "ISC",
   "dependencies": {
+    "apollo-client": "^0.4.11",
+    "graphql-tag": "^0.1.11",
     "react": "^15.1.0",
+    "react-apollo": "^0.4.5",
     "react-dom": "^15.1.0",
     "react-redux": "^4.2.1",
     "redux": "^3.2.1",

@@ -15,6 +15,6 @@ export default {
     id: { type: GraphQLString }
   },
   resolve (root, params, options) {
-      return TaskModel.findById(params.id).exec();
+      return UserModel.findById(params.id).exec();
   }
 };
